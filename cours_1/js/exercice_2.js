@@ -12,16 +12,26 @@ function drawCameraPart() {
 }
 
 function bounceImage(){
+    // On augment la vitesse par rapport à la durée de pause
     let vitesse = nbrSamePlace * 0.005;
+    // Les dimesnions de l'image dessinée
     let imageWidth = capture.width / 10;
     let imageHeight = capture.height / 10;
 
+    // Les limites dans lesquels on veut essiner l'image, comme 
+    // on dessine l'image à partir du coin haut gauche, 
+    // la limite doit prednre tout l'écran moins la hauteur et l'argeur
     let limiteX = width - imageWidth;
     let limiteY = height - imageHeight;
 
+    // On calcule la  quantité de mouvement. Pour cela on part du point 
+    // de départ et on calcule la distance = temps * vitesse
+    // on utilise en modulo la limite fois 2, pour pouvoir ensuite déterminer le sens du mouvement
     let mouvementX = (mouseX + nbrSamePlace * vitesse) % (limiteX * 2);
     let mouvementY = (mouseY + nbrSamePlace * vitesse) % (limiteY * 2);
 
+    // si le mouvement est plus petit que la limite : il descend donc on peut juste utiliser la quantité de mouvement
+    // sinon il monte et donc on inverse la progression
     let positionX = mouvementX < limiteX
     ? mouvementX
     : limiteX * 2 - mouvementX;
