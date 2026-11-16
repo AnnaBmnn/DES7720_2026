@@ -28,12 +28,17 @@ function setup() {
 }
 
 function draw() {
+    // On doit dessiner l'image pour pouvoir la copier 
+    // On la dessine au bas du canvas pour pouvoir la cacher
+    background(0, 0, 0, 10)
+
+}
+
+function mouseDragged() {
     image(capture, 0, height, width, height);
-    // background(0);
 
 
     copy(capture, mouseX, mouseY, 100, 100, mouseX , mouseY, 100, 100);
-
 }
 
 
