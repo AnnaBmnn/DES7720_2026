@@ -21,4 +21,4 @@ J'ai très hâte d'expérimenter autour de plusieurs idées
 + le FOMO
 + ne rien faire comme résistance
 
-Je n'ai pas encore trop d'idée pour les interaction : peut-être le clic, peut-être détecter certains choses à l'écran, peut-être le midi controller, peut-etre un niveau sonore. Je ne sais pas mais le thème va surement le définir
+Je n'ai pas encore trop d'idée pour les interaction : peut-être le clic, peut-être détecter certains choses à l'écran, peut-être le midi controller, peut-etre un niveau sonore. Je ne sais pas mais le thème va surement le définir.
