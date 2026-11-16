@@ -1,8 +1,13 @@
 // Déclaration de variables
 let refletImage;
 let motorImage;
+let capture;
 let prevMouseX = 0;
 let prevMouseY = 0;
+
+function convertVideoInImg(video){
+
+}
 
 function preload() {   
     refletImage = loadImage('./assets/images/reflet.jpg');
@@ -11,30 +16,26 @@ function preload() {
 
 
 function setup() {
-    createCanvas(refletImage.width * 2, refletImage.height);
+    createCanvas(640, 640 * 2);
     background(0);
-    // imageMode(CENTER);
-    image(refletImage, 0, 0);
 
+    // Accéder à la webcam et créer la capture vidéo 
+    capture = createCapture(VIDEO);
+
+    capture.size(640, 640);
+
+    capture.hide();
 }
 
 function draw() {
-    background(0, 0, 0, 5);
-    rect(mouseX, mouseY, 100, 100);
+    image(capture, 0, height, width, height);
+    // background(0);
+
+
+    copy(capture, mouseX, mouseY, 100, 100, mouseX , mouseY, 100, 100);
+
 }
 
-function mouseDragged() {
-    // image(refletImage, 0, 0);
-
-    // copy(refletImage, mouseX, mouseY, 100, 100, mouseX + refletImage.width, mouseY, 100, 100);
-    mousePressed()
-}
-
-function mousePressed(){
-    image(refletImage, 0, 0);
-
-    copy(refletImage, mouseX, mouseY, 100, 100, mouseX + refletImage.width, mouseY, 100, 100);
-}
 
 /*
 Pistes d’exploration — choisissez une idée ou suivez la vôtre.
