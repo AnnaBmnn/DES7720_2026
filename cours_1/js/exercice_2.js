@@ -4,10 +4,33 @@ let motorImage;
 let capture;
 let prevMouseX = 0;
 let prevMouseY = 0;
+let nbrSamePlace = 0;
 
 function drawCameraPart() {
     image(capture, 0, height, width, height);
     copy(capture, 0, 0, capture.width, capture.height, mouseX , mouseY , capture.width / 10, capture.height / 10);
+}
+
+function bounceImage(){
+    let vitesse = nbrSamePlace * 0.005;
+    let imageWidth = capture.width / 10;
+    let imageHeight = capture.height / 10;
+
+    let limiteX = width - imageWidth;
+    let limiteY = height - imageHeight;
+
+    let mouvementX = (mouseX + nbrSamePlace * vitesse) % (limiteX * 2);
+    let mouvementY = (mouseY + nbrSamePlace * vitesse) % (limiteY * 2);
+
+    let positionX = mouvementX < limiteX
+    ? mouvementX
+    : limiteX * 2 - mouvementX;
+
+    let positionY = mouvementY < limiteY
+    ? mouvementY
+    : limiteY * 2 - mouvementY;
+
+    copy(capture, 0, 0, capture.width, capture.height, positionX ,positionY , imageWidth, imageHeight);
 }
 
 function preload() {   
@@ -18,7 +41,6 @@ function preload() {
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    background(0);
 
     // Accéder à la webcam et créer la capture vidéo 
     capture = createCapture(VIDEO);
@@ -30,10 +52,21 @@ function setup() {
 }
 
 function draw() {
-    // On doit dessiner l'image pour pouvoir la copier 
-    // On la dessine au bas du canvas pour pouvoir la cacher
-    // background(0, 0, 0, 10)
+    background(0, 0, 0, 5);
 
+    // drawCameraPart()
+
+    if(prevMouseX == mouseX && prevMouseY == mouseY){
+        nbrSamePlace += 1;
+        image(capture, 0, height, width, height);
+        bounceImage();
+    }else {
+        nbrSamePlace = 0;
+        drawCameraPart()
+    }
+
+    prevMouseX = mouseX
+    prevMouseY = mouseY
 }
 
 function mouseDragged() {
