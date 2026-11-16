@@ -4,6 +4,7 @@
 function preload() {
 }
 
+
 // Préparer le sketch une seule fois.
 function setup() {
     createCanvas(640, 640); 
@@ -21,5 +22,4 @@ function draw() {
 
     // Rectangle follow the mouse
     rect(mouseX, mouseY, mouseX, 100);
-
 }

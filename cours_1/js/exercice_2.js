@@ -5,8 +5,9 @@ let capture;
 let prevMouseX = 0;
 let prevMouseY = 0;
 
-function convertVideoInImg(video){
-
+function drawCameraPart() {
+    image(capture, 0, height, width, height);
+    copy(capture, 0, 0, capture.width, capture.height, mouseX , mouseY , capture.width / 10, capture.height / 10);
 }
 
 function preload() {   
@@ -16,7 +17,7 @@ function preload() {
 
 
 function setup() {
-    createCanvas(640, 640 * 2);
+    createCanvas(windowWidth, windowHeight);
     background(0);
 
     // Accéder à la webcam et créer la capture vidéo 
@@ -25,20 +26,22 @@ function setup() {
     capture.size(640, 640);
 
     capture.hide();
+
 }
 
 function draw() {
     // On doit dessiner l'image pour pouvoir la copier 
     // On la dessine au bas du canvas pour pouvoir la cacher
-    background(0, 0, 0, 10)
+    // background(0, 0, 0, 10)
 
 }
 
 function mouseDragged() {
-    image(capture, 0, height, width, height);
+    drawCameraPart()
+}
 
-
-    copy(capture, mouseX, mouseY, 100, 100, mouseX , mouseY, 100, 100);
+function mousePressed() {
+    drawCameraPart()
 }
 
 

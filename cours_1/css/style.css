@@ -3,9 +3,25 @@ body {
   min-height: 100vh;
   display: grid;
   place-items: center;
+  background: black;
 }
 
 canvas {
   display: block;
-  border: 1px solid black;
+}
+
+.instruction {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: black;
+  color: white;
+  font-family:  Helvetica, sans-serif;
+  text-transform: uppercase;
+  width: 300px;
+  padding: 12px;
+  border: 1px solid yellow;
+  color: yellow;
+  border-radius: 3px;
+  pointer-events: none;
 }
