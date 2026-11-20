@@ -28,6 +28,7 @@ J'ai très hâte d'expérimenter autour de plusieurs idées
 Je n'ai pas encore trop d'idée pour les interaction : peut-être le clic, peut-être détecter certains choses à l'écran, peut-être le midi controller, peut-etre un niveau sonore. Je ne sais pas mais le thème va surement le définir.
 
 ## 20/11/2026
+Mon plan secret à réussi.
 Hier j'ai eu la chance de tester mes visuels de shader dans le dome de la SAT avec un rendu en temps réel. C'était fou et ça me donne envie de tester plein de chose pour voir ce que ça donne dans la SAT. 
 J'ai vu aussi des oeuvres web collaboratives dans le dome. Notamment un jeu en JS pour créer à plusieurs des constellations. Grâce à un code QR on se connecte au serveur, on calibre au début notre position dans le dome par le gyroscope, puis ensuite la différence entre la position de calibration et la position présente permet de faire bouger notre pointer dans l'espace. J'ai envie de réflechir à une expérience collaborative dans le dome.
 (ça fait longtemps que je gosse)[https://no-fun.fun/] avec les shaders en glsl parce que je trouve ça marrant et j'aime partir de forme simple et travailler avec les contraintes de l'outil : écrire du code à la main et petit à petit tester et découvrir des nouveaux visuels. J'aimerais y ajouter un eprofondeur / un propos (meme si faire quelque que chose juste parce que c'est marrant ça peut aller comme un acte à contre courant face à l'hyper productivisme (dans lequel je baigne totalement)).
