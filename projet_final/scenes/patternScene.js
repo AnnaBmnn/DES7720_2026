@@ -7,7 +7,12 @@ let bodyCanvas ;
 let map;
 
 export function createScene(scene) {
-  const bodyCanvas = createBody();               
+
+  const result = createBody(); 
+  const nose = result.nose;
+  const bodyCanvas = result.canvas;
+
+  // let bodyCanvas;   
   const map = new THREE.CanvasTexture(bodyCanvas);
   map.colorSpace = THREE.SRGBColorSpace;
 
@@ -29,8 +34,8 @@ export function createScene(scene) {
     uniforms: {
       time: { value: 1.0 },
       resolution: { value: new THREE.Vector2() },
-      uTexture: { type: "t", value: map }
-
+      uTexture: { type: "t", value: map },
+      uNose: {value: nose}
     },
     side: THREE.DoubleSide,
     vertexShader: 
@@ -148,6 +153,9 @@ export function createScene(scene) {
     // cube.rotation.z = phase * Math.PI * 2;
     // cube.rotation.x = phase * Math.PI * 2;
     material.uniforms.time.value = time
+    if(window.nose){
+      material.uniforms.uNose.value = [window.nose.x,window.nose.y ]
+    }
 
     // Update the canva smaterial 
     map.needsUpdate = true; 

@@ -1,6 +1,7 @@
 let detector, video, canvas, ctx;
 let isRunning = false;
 let rafId;
+let nose = [];
 
 const WIDTH = 640, HEIGHT = 480;
 
@@ -13,7 +14,7 @@ export function createBody() {
   video = document.getElementById('video');
 
   init();                        // not awaited
-  return canvas;
+  return {canvas, nose};
 }
 
 async function init() {
@@ -61,6 +62,8 @@ async function detectPose() {
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     try {
       const poses = await detector.estimatePoses(video);
+      console.log()
+      window.nose = poses[0].keypoints[0]
       drawPoses(poses);
     } catch (err) {
       console.error('Error detecting poses:', err);
@@ -97,6 +100,7 @@ function drawPoses(poses) {
 
 // Draw the skeleton connecting keypoints
 function drawSkeleton(pose) {
+    console.log(pose)
     // Define connections for a human skeleton
     const connections = [
         ['nose', 'left_eye'], ['nose', 'right_eye'],
