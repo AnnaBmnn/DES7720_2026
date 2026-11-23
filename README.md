@@ -60,3 +60,6 @@ Je vais commencer par mettre le code pour faire le rendu dans le dome, puis ajou
 Fin de la session : je suis contente d'avoir déjà réussi à intégrer Tensorflow + une structure qui fonctionne. La prochaine étape ça va etre d'utiliser ce canvas comme une texture pour mon matériel et de le passer en uniform à mon shader.
 Je dois ensuite réflechir au contexte dans le dome à la SAT : dans un contexte de fête, ce qui est lourd c'est trop de lumière, trop de téléphone. L'impression d'être dans instagram.
 Utiliser ml5 object détection pour détecter les téléphones. Plus il y a de téléphone plus il y a de la lumière ? Le son diminue ? Là où se trouve le téléphone cela agit comme un masque ? 
+<br> Si un téléphone est détecté on affiche la tête de la personne la plus proche ? 
+
+<br> La discussion avec un ami me fait réaliser que la fraction est plus grande lorsque que l'on part d'une interface avec un fonctionnement que l'on connait, vis à vis duquel on a des attentes.

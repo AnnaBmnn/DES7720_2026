@@ -2,8 +2,16 @@ import * as THREE from "three";
 import { createBody } from "../tools/bodypose.js";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 // scène de dé template : - )
+
+let bodyCanvas ;
+let map;
+
 export function createScene(scene) {
-  createBody(scene);
+  const bodyCanvas = createBody();               
+  const map = new THREE.CanvasTexture(bodyCanvas);
+  map.colorSpace = THREE.SRGBColorSpace;
+
+
   const key = new THREE.DirectionalLight(0xffffff, 2.5);
   key.position.set(3, 5, 2);
   const fill = new THREE.DirectionalLight(0xffffff, 0.8);
@@ -12,7 +20,11 @@ export function createScene(scene) {
 
 
   const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-  // const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+  const bodyMaterial = new THREE.MeshStandardMaterial({ 
+    map, 
+    roughness: 0.35, 
+    side: THREE.DoubleSide
+  });
   const material = new THREE.ShaderMaterial( {
     uniforms: {
       time: { value: 1.0 },
@@ -108,7 +120,7 @@ export function createScene(scene) {
 
     `
   } );
-  const cube = new THREE.Mesh( geometry, material );
+  const cube = new THREE.Mesh( geometry, bodyMaterial );
   cube.scale.x = 12;
   cube.scale.z = 12;
   cube.scale.y = 12;
@@ -122,5 +134,8 @@ export function createScene(scene) {
     // cube.rotation.x = phase * Math.PI * 2;
     material.uniforms.time.value = time
 
+    // Update the canva smaterial 
+    map.needsUpdate = true; 
+    console.log(map)
   };
 }

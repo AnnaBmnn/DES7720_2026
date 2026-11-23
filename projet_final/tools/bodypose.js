@@ -1,145 +1,74 @@
-// Variables
-var detector;
-let model = 'movenet';
-let video;
-let canvas;
-let ctx;
+let detector, video, canvas, ctx;
 let isRunning = false;
 let rafId;
 
-export async function createBody(scene) {
+const WIDTH = 640, HEIGHT = 480;
 
+// Synchronous: returns the canvas immediately, starts loading in the background
+export function createBody() {
+  canvas = document.getElementById('canvasBodypose');
+  canvas.width = WIDTH;          // final size now, before three.js sees it
+  canvas.height = HEIGHT;
+  ctx = canvas.getContext('2d');
+  video = document.getElementById('video');
 
-    console.log(scene);
+  init();                        // not awaited
+  return canvas;
+}
 
-    // Make sure TF.js is loaded
+async function init() {
+  try {
     await tf.ready();
-
-    // Setup canvas
-    canvas = document.getElementById('canvasBodypose');
-    ctx = canvas.getContext('2d');
-
-    // Get camera element
-    video = document.getElementById('video');
-
-    startCamera()
-
-    // Load the initial model
-    await loadModel();
-
-    // console.log(ml5);
-    return 'coucu';
+    await Promise.all([startCamera(), loadModel()]);
+    isRunning = true;
+    detectPose();
+  } catch (err) {
+    console.error('Bodypose init failed:', err);
+  }
 }
 
-// Load the selected pose detection model
 async function loadModel() {
-    if (detector) {
-        detector.dispose();
-    }
-    console.log('loading')
-
-    try {
-        let modelConfig;
-
-        if (model === 'movenet') {
-            modelConfig = {
-                modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING
-            };
-        } 
-        detector = await poseDetection.createDetector(
-            model === 'movenet'
-                ? poseDetection.SupportedModels.MoveNet
-                : model === 'blazepose'
-                    ? poseDetection.SupportedModels.BlazePose
-                    : poseDetection.SupportedModels.PoseNet,
-            modelConfig
-        );
-
-    } catch (error) {
-        console.error(error);
-    }
+  detector?.dispose();
+  detector = await poseDetection.createDetector(
+    poseDetection.SupportedModels.MoveNet,
+    { modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING }
+  );
 }
 
-// Start the camera and pose detection
 async function startCamera() {
-    try {
-        const constraints = {
-            video: {
-                width: 640,
-                height: 480
-            }
-        };
-
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        video.srcObject = stream;
-
-        video.onloadedmetadata = () => {
-            // Required by pose-detection: it uses video.width/height, not videoWidth/videoHeight
-            video.width = video.videoWidth;
-            video.height = video.videoHeight;
-
-            // Make the canvas match the video so keypoint coords line up 1:1
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            canvas.style.opacity = 0.3;
-
-            video.play();
-            video.style.display = 'none';
-            isRunning = true;
-            detectPose();
-        };
-    } catch (error) {
-        console.error(error);
-    }
-}
-// Stop the camera and pose detection
-function stopCamera() {
-    if (video.srcObject) {
-        video.srcObject.getTracks().forEach(track => track.stop());
-        video.srcObject = null;
-    }
-
-    if (rafId) {
-        cancelAnimationFrame(rafId);
-        rafId = null;
-    }
-
-    startBtn.disabled = false;
-    stopBtn.disabled = true;
-    modelSelect.disabled = false;
-    isRunning = false;
-
-    // Clear the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const stream = await navigator.mediaDevices.getUserMedia({
+    video: { width: WIDTH, height: HEIGHT },
+  });
+  video.srcObject = stream;
+  await new Promise(r => (video.onloadedmetadata = r));
+  video.width = video.videoWidth;   // needed by pose-detection
+  video.height = video.videoHeight;
+  video.style.display = 'none';
+  await video.play();
 }
 
-// Continuously detect poses
+export function stopBody() {
+  isRunning = false;
+  video.srcObject?.getTracks().forEach(t => t.stop());
+  video.srcObject = null;
+  if (rafId) cancelAnimationFrame(rafId);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 async function detectPose() {
-    if (!isRunning) return;
-
-    if (video.readyState === 4) {
-        // Draw the video frame
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        // Detect poses
-        try {
-            if(detector){
-                const poses = await detector.estimatePoses(video);
-
-                // Draw the poses
-                drawPoses(poses);
-
-                // statusDiv.textContent = `Detecting poses using ${model}...`;
-            }
-
-        } catch (error) {
-            console.error('Error detecting poses:', error);
-        }
+  if (!isRunning) return;
+  if (video.readyState === 4) {
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    try {
+      const poses = await detector.estimatePoses(video);
+      drawPoses(poses);
+    } catch (err) {
+      console.error('Error detecting poses:', err);
     }
-
-    // Continue detection loop
-    rafId = requestAnimationFrame(detectPose);
+  }
+  rafId = requestAnimationFrame(detectPose);
 }
+
 // Draw detected poses on the canvas
 function drawPoses(poses) {
 
@@ -198,14 +127,9 @@ function drawSkeleton(pose) {
         const p2 = keypointMap[p2Name];
 
         if (p1 && p2 && p1.score > 0.3 && p2.score > 0.3) {
-            console.log(p1.x)
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(0, 10);
-            ctx.lineTo(30, 30);
             ctx.stroke();
         }
     }
