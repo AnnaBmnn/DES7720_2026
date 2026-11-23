@@ -63,3 +63,8 @@ Utiliser ml5 object détection pour détecter les téléphones. Plus il y a de t
 <br> Si un téléphone est détecté on affiche la tête de la personne la plus proche ? 
 
 <br> La discussion avec un ami me fait réaliser que la fraction est plus grande lorsque que l'on part d'une interface avec un fonctionnement que l'on connait, vis à vis duquel on a des attentes.
+
+
+## Suite des tests
+J'ai mis en place les textures passer en uniforms dans le shader. C'est nice mais je pense qu'il faudrait mieux que je donne les points du corps pour orienter la déformation.
+<img src="./assets/img/20261123_01.png"  height="500" ></video>

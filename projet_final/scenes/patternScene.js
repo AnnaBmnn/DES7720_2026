@@ -19,7 +19,7 @@ export function createScene(scene) {
   scene.add(new THREE.AmbientLight(0xffffff, 0.35), key, fill);
 
 
-  const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+  const geometry = new THREE.BoxGeometry( 1, 1, 1, 30, 30, 30 );
   const bodyMaterial = new THREE.MeshStandardMaterial({ 
     map, 
     roughness: 0.35, 
@@ -28,21 +28,31 @@ export function createScene(scene) {
   const material = new THREE.ShaderMaterial( {
     uniforms: {
       time: { value: 1.0 },
-      resolution: { value: new THREE.Vector2() }
+      resolution: { value: new THREE.Vector2() },
+      uTexture: { type: "t", value: map }
+
     },
     side: THREE.DoubleSide,
     vertexShader: 
     `
       uniform float time;
+      uniform sampler2D uTexture;
 
       varying vec2 vUv;
+      varying vec4 vBodyTexture;
       varying float vTime;
 
       void main()
       {
           vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+          vBodyTexture = texture2D(uTexture, uv);
+
+          //modelPosition.z += vBodyTexture.g * 5.0 ;
           vec4 viewPosition = viewMatrix * modelPosition;
+
           vec4 projectedPosition = projectionMatrix * viewPosition;
+          //projectedPosition.z += vBodyTexture.y ;
+
           gl_Position = projectedPosition ;
 
           // Varying
@@ -54,9 +64,12 @@ export function createScene(scene) {
     ,
     fragmentShader: `
       #define PI 3.1415926535897932384626433832795
+      uniform sampler2D uTexture;
 
       varying vec2 vUv;
       varying float vTime;
+      varying vec4 vBodyTexture;
+
       //  Classic Perlin 2D Noise 
       //  by Stefan Gustavson
       //
@@ -114,13 +127,15 @@ export function createScene(scene) {
             vUv.y  + sin(vUv.x * 101.0 ) * 0.5 * cos(vUv.y * 5.0  + vTime * 2.1) + cnoise(vUv * 10.0) 
         );
         float color = wavedUv.y ;
-        gl_FragColor = vec4(wavedUv2.y , wavedUv2.y , wavedUv2.y , 1.0);
+        vec4 bodyTexture = texture2D(uTexture, vUv);
+
+        gl_FragColor = color * bodyTexture;
 
       }
 
     `
   } );
-  const cube = new THREE.Mesh( geometry, bodyMaterial );
+  const cube = new THREE.Mesh( geometry, material );
   cube.scale.x = 12;
   cube.scale.z = 12;
   cube.scale.y = 12;
@@ -136,6 +151,5 @@ export function createScene(scene) {
 
     // Update the canva smaterial 
     map.needsUpdate = true; 
-    console.log(map)
   };
 }
