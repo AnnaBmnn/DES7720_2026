@@ -46,3 +46,6 @@ Retrouver la source qui dit qu'avec le capitalisme on est devenu notre propre ma
 Question aussi du privilège ? Qui peut se permettre de rien faire ? Au détriment de qui l'on peut ne rien faire ?
 <br>
 Explorer aussi la question de prendre l'espace ? J'ai failli me dégonfler hier parce que les autres personnes montrer des choses incroyable puis j'avais peur d'etre ridicule techniquement 
+
+<video src="./assets/video/sat/1_compressed.mp4"  height="500" controls></video>
+<video src="./assets/video/sat/2_compressed.mp4"  height="500" controls></video>
