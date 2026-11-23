@@ -56,3 +56,7 @@ Explorer aussi la question de prendre l'espace ? J'ai failli me dégonfler hier 
 Je me sens un peu submergée par l'ensemble des possibilités et des thèmes à explorer. 
 Je vais commencer par une idée technique puis voir ce qu'il se passe. <br>
 Je vais commencer par mettre le code pour faire le rendu dans le dome, puis ajouter du body detector pour le projeter.
+----
+Fin de la session : je suis contente d'avoir déjà réussi à intégrer Tensorflow + une structure qui fonctionne. La prochaine étape ça va etre d'utiliser ce canvas comme une texture pour mon matériel et de le passer en uniform à mon shader.
+Je dois ensuite réflechir au contexte dans le dome à la SAT : dans un contexte de fête, ce qui est lourd c'est trop de lumière, trop de téléphone. L'impression d'être dans instagram.
+Utiliser ml5 object détection pour détecter les téléphones. Plus il y a de téléphone plus il y a de la lumière ? Le son diminue ? Là où se trouve le téléphone cela agit comme un masque ? 

@@ -1,7 +1,9 @@
 import * as THREE from "three";
+import { createBody } from "../tools/bodypose.js";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 // scène de dé template : - )
 export function createScene(scene) {
+  createBody(scene);
   const key = new THREE.DirectionalLight(0xffffff, 2.5);
   key.position.set(3, 5, 2);
   const fill = new THREE.DirectionalLight(0xffffff, 0.8);
@@ -116,8 +118,8 @@ export function createScene(scene) {
   return (time) => {
     const phase = (time % 7) / 7;
     // cube.position.y = 1.2 + Math.sin(Math.PI * phase) * 0.6;
-    cube.rotation.z = phase * Math.PI * 2;
-    cube.rotation.x = phase * Math.PI * 2;
+    // cube.rotation.z = phase * Math.PI * 2;
+    // cube.rotation.x = phase * Math.PI * 2;
     material.uniforms.time.value = time
 
   };

@@ -22,6 +22,8 @@ const cancel = document.querySelector("#cancel");
 const status = document.querySelector("#status");
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+window.renderer = renderer;
+
 view.appendChild(renderer.domElement);
 const scene = new THREE.Scene();
 const animate = createScene(scene);
