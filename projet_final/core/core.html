@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Domemaster</title>
+  <style>
+    * { box-sizing: border-box; border-radius: 0; }
+    :root { color-scheme: dark; }
+    body { margin: 0; background: #2b2b2b; color: #f5f5f5; font: 11px system-ui, sans-serif; height: 100vh; height: 100dvh; display: flex; flex-direction: column; }
+    form { flex-shrink: 0; display: flex; flex-direction: column; gap: 5px; padding: 6px; max-height: 48vh; overflow: auto; background: #2b2b2b; }
+    form[hidden] { display: none; }
+    .row { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 8px; }
+    label, .folder { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+    .actions { display: flex; align-items: center; gap: 5px; }
+    input, select, button { height: 24px; border: 1px solid #555; border-radius: 0; background: #333; color: #f5f5f5; font: inherit; }
+    select { padding: 0 18px 0 5px; }
+    input[type="number"] { width: 48px; padding: 0 5px; }
+    #frames { width: 66px; }
+    button { padding: 0 7px; cursor: pointer; white-space: nowrap; }
+    button:hover:not(:disabled), select:hover:not(:disabled) { background: #414141; }
+    :is(input, select, button):focus-visible { outline: 1px solid #f5f5f5; outline-offset: 1px; }
+    :disabled { opacity: 0.4; cursor: default; }
+    input[type="checkbox"] { width: 13px; height: 13px; margin: 0; accent-color: #aaa; }
+    .folder { min-width: 0; }
+    .folder input { width: 250px; max-width: 30vw; min-width: 100px; padding: 0 5px; text-overflow: ellipsis; }
+    .hint { margin-left: auto; white-space: nowrap; font-size: 10px; }
+    output { color: #f5f5f5; font-size: 11px; overflow-wrap: anywhere; }
+    output:empty { display: none; }
+    main { flex: 1; min-height: 0; display: grid; place-items: center; overflow: hidden; background: #2b2b2b; }
+    canvas { display: block; }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.187.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <form onsubmit="return false">
+    <div class="row">
+      <label for="mode">View
+        <select id="mode"><option value="dome">Dome</option><option value="viewport">Viewport</option><option value="dome-preview">Dome preview</option></select>
+      </label>
+      <label for="quality">Preview
+        <select id="quality"><option value="0.5">50%</option><option value="1" selected>100%</option><option value="2">200%</option></select>
+      </label>
+      <label for="fov">FOV
+        <input id="fov" type="number" value="210" min="1" max="360" required>
+      </label>
+      <div class="actions">
+        <button id="inside" type="button" hidden>Inside</button>
+        <button id="pause" type="button">Pause</button>
+        <button id="reset" type="button">Reset</button>
+      </div>
+      <label for="camera">Render camera
+        <select id="camera"><option value="dome">Dome</option><option value="viewport">Viewport</option><option value="dome-preview">Dome preview</option></select>
+      </label>
+      <label for="size">Size
+        <select id="size"><option>512</option><option selected>1024</option><option>2048</option><option>4096</option><option value="8192">8192 (8K)</option></select>
+      </label>
+      <label for="fps">FPS
+        <input id="fps" type="number" value="30" min="1" max="120" step="1" required>
+      </label>
+      <label for="frames">Frames
+        <input id="frames" type="number" value="150" min="1" max="999999" step="1" required>
+      </label>
+      <label for="alpha"><input id="alpha" type="checkbox" checked>Transparent</label>
+      <div class="actions">
+        <button id="still" type="button">Render PNG</button>
+        <button id="render" type="button">Render sequence</button>
+        <button id="cancel" type="button" hidden>Cancel</button>
+      </div>
+      <span class="hint">M: menu</span>
+    </div>
+    <div class="row">
+      <div class="folder">
+        <button id="png-folder" type="button">PNG folder…</button>
+        <input id="png-path" type="text" readonly aria-label="PNG output folder" placeholder="Choose folder" title="PNG output folder">
+      </div>
+      <div class="folder">
+        <button id="sequence-folder" type="button">Sequence folder…</button>
+        <input id="sequence-path" type="text" readonly aria-label="Sequence output folder" placeholder="Choose folder" title="Sequence output folder">
+      </div>
+    </div>
+    <output id="status" aria-live="polite"></output>
+  </form>
+  <main></main>
+  <script type="module" src="/core/domemaster.js"></script>
+</body>
+</html>

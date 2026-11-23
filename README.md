@@ -49,3 +49,10 @@ Explorer aussi la question de prendre l'espace ? J'ai failli me dégonfler hier 
 
 <video src="./assets/video/sat/1_compressed.mp4"  height="500" controls></video>
 <video src="./assets/video/sat/2_compressed.mp4"  height="500" controls></video>
+
+
+## 23/11/2026
+
+Je me sens un peu submergée par l'ensemble des possibilités et des thèmes à explorer. 
+Je vais commencer par une idée technique puis voir ce qu'il se passe. <br>
+Je vais commencer par mettre le code pour faire le rendu dans le dome, puis ajouter du body detector pour le projeter.
