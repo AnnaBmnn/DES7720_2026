@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { createScene } from "../sceneMaster.js";
 import { createDomePreview } from "./domePreview.js";
-import { createPNGExporter } from "./pngExporter.js";
+// import { createPNGExporter } from "./pngExporter.js";
 
 const form = document.querySelector("form");
 const view = document.querySelector("main");
