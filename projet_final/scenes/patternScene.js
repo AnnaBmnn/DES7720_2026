@@ -8,9 +8,7 @@ let map;
 
 export function createScene(scene) {
 
-  const result = createBody(); 
-  const nose = result.nose;
-  const bodyCanvas = result.canvas;
+  const bodyCanvas = createBody(); 
 
   // let bodyCanvas;   
   const map = new THREE.CanvasTexture(bodyCanvas);
@@ -35,7 +33,6 @@ export function createScene(scene) {
       time: { value: 1.0 },
       resolution: { value: new THREE.Vector2() },
       uTexture: { type: "t", value: map },
-      uNose: {value: nose}
     },
     side: THREE.DoubleSide,
     vertexShader: 
@@ -134,7 +131,7 @@ export function createScene(scene) {
         float color = wavedUv.y ;
         vec4 bodyTexture = texture2D(uTexture, vUv);
 
-        gl_FragColor = color * bodyTexture;
+        gl_FragColor = bodyTexture;
 
       }
 
@@ -153,9 +150,6 @@ export function createScene(scene) {
     // cube.rotation.z = phase * Math.PI * 2;
     // cube.rotation.x = phase * Math.PI * 2;
     material.uniforms.time.value = time
-    if(window.nose){
-      material.uniforms.uNose.value = [window.nose.x,window.nose.y ]
-    }
 
     // Update the canva smaterial 
     map.needsUpdate = true; 

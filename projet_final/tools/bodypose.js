@@ -1,7 +1,6 @@
 let detector, video, canvas, ctx;
 let isRunning = false;
 let rafId;
-let nose = [];
 
 const WIDTH = 640, HEIGHT = 480;
 
@@ -14,7 +13,7 @@ export function createBody() {
   video = document.getElementById('video');
 
   init();                        // not awaited
-  return {canvas, nose};
+  return canvas;
 }
 
 async function init() {
@@ -59,11 +58,9 @@ export function stopBody() {
 async function detectPose() {
   if (!isRunning) return;
   if (video.readyState === 4) {
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    // ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     try {
       const poses = await detector.estimatePoses(video);
-      console.log()
-      window.nose = poses[0].keypoints[0]
       drawPoses(poses);
     } catch (err) {
       console.error('Error detecting poses:', err);
@@ -80,14 +77,14 @@ function drawPoses(poses) {
         // Draw keypoints
         for (const keypoint of pose.keypoints) {
             if (keypoint.score > 0.3) {
-                ctx.beginPath();
-                ctx.arc(keypoint.x, keypoint.y, 5, 0, 2 * Math.PI);
-                ctx.fillStyle = 'red';
-                ctx.fill();
+                // ctx.beginPath();
+                // ctx.arc(keypoint.x, keypoint.y, 5, 0, 2 * Math.PI);
+                // ctx.fillStyle = 'red';
+                // ctx.fill();
 
                 // Optionally draw keypoint name
                 ctx.fillStyle = 'white';
-                ctx.fillText(keypoint.name, keypoint.x + 10, keypoint.y + 5);
+                //ctx.fillText(keypoint.name, keypoint.x + 10, keypoint.y + 5);
             }
         }
 
