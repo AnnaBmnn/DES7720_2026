@@ -1,5 +1,7 @@
 # DES7720_2026
 
+[Lien vers le projet final]('https://annabmnn.github.io/DES7720_2026/projet_final/core/core.html')
+
 ## TO-DO LISTE
 - [ ]  Mettre sur une branche le code des shaders dans le dôme
 
@@ -89,3 +91,10 @@ Dessiner les boudings box des téléphones dans un canvas va être ma prochaine 
 <video src="./assets/video/20261126/01.mp4"  height="500" controls></video>
 
 Dans les tests on remarque aussi que le test jump, il faudra encore laisser un délai pour qu eça ne jump pas
+
+
+#### Etapes 2
+
+J'ai mis en place le mask avec un channel de ouleur pour les objets et un channel pour les pour les persons. Cela fonctionne techniquement mais la détection du téléphone n'est pas vraiment satisfaisante. Il faudrait réflechir à détecter autre chose (des verres ?) ou changer d'idée 
+
+<video src="./assets/video/20261126/02.mp4"  height="500" controls></video>

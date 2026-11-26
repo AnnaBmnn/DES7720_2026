@@ -59,8 +59,6 @@ async function detectPose() {
   if (!isRunning) return;
   if (video.readyState === 4) {
     // On ne dessine plus la vidéo mais un fond sur le canavs
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
     // ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     try {
       const poses = await detector.estimatePoses(video);

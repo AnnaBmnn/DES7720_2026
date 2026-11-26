@@ -2,15 +2,15 @@ import * as THREE from "three";
 import { createBody } from "../tools/bodypose.js";
 import { createObjectDetection } from "../tools/objectDetection.js";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
-// scène de dé template : - )
+
 
 let bodyCanvas ;
 let map;
 
 export function createScene(scene) {
 
-  const bodyCanvas = createBody(); 
-  createObjectDetection(); 
+  // const bodyCanvas = createBody(); 
+  const bodyCanvas = createObjectDetection(); 
 
   // let bodyCanvas;   
   const map = new THREE.CanvasTexture(bodyCanvas);
@@ -131,9 +131,15 @@ export function createScene(scene) {
             vUv.y  + sin(vUv.x * 101.0 ) * 0.5 * cos(vUv.y * 5.0  + vTime * 2.1) + cnoise(vUv * 10.0) 
         );
         vec4 bodyTexture = texture2D(uTexture, vUv);
-        float color = wavedUv.y ;
-        color = 1.0 * bodyTexture.y;
-        gl_FragColor = vec4(vec3(color), 1.0);
+        float pattern = wavedUv.y ;
+        float phone = bodyTexture.x;
+        float people = bodyTexture.y;
+        float rayure = mod(vUv.y * 20.0, 1.0);
+        rayure = step(0.5, rayure);
+        float color = phone > 0.0 ? (rayure * -1.0 + 1.0) : rayure;
+        color = people > 0.0 ? (color * -1.0 + 1.0) : color;
+        vec3 colors = vec3(color + bodyTexture.xyz * 0.0);
+        gl_FragColor = vec4(colors,1.0);
 
       }
 
@@ -157,3 +163,4 @@ export function createScene(scene) {
     map.needsUpdate = true; 
   };
 }
+
