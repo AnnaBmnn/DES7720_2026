@@ -47,8 +47,8 @@ Question aussi du privilège ? Qui peut se permettre de rien faire ? Au détrime
 <br>
 Explorer aussi la question de prendre l'espace ? J'ai failli me dégonfler hier parce que les autres personnes montrer des choses incroyable puis j'avais peur d'etre ridicule techniquement 
 
-<video src="./assets/video/sat/1_compressed.mp4"  height="500" controls></video>
-<video src="./assets/video/sat/2_compressed.mp4"  height="500" controls></video>
+<video src="./assets/video/20261119/1_compressed.mp4"  height="500" controls></video>
+<video src="./assets/video/20261119/2_compressed.mp4"  height="500" controls></video>
 
 
 ## 23/11/2026
@@ -67,4 +67,25 @@ Utiliser ml5 object détection pour détecter les téléphones. Plus il y a de t
 
 ## Suite des tests
 J'ai mis en place les textures passer en uniforms dans le shader. C'est nice mais je pense qu'il faudrait mieux que je donne les points du corps pour orienter la déformation.
-<img src="./assets/img/20261123_01.png"  height="500" ></video>
+<img src="./assets/img/20261123_01.png"  height="500" ></img>
+
+J'ai réalisé qu'avoir les points du corps à converitr en shader allait etre un enfer de calcul. Autant rester avec une texture transitoire, en laissant seulement les points du corps. 
+<video src="./assets/video/20261123/01.mp4"  height="500" controls></video>
+
+## 26/11/2026
+
+### Object detection
+J'ai reflechi aux frictions lorsque l'on danse dans le dome 
++ trop de lumière
++ trop de personnes sur leur téléphone
++ impression d'être DANS instagram
+
+Je veux donc essayer en utilisant la librairie de détection d'objet de tensorflow de détecter les téléphones.
+Lorsqu'ils sont détécter, ils ouvriraient des fenetres vers des motifs super lumineux (masque)(motif ou instagram ?) qui ajouterait de la lumière à l'espace de danse.
+#### Etapes 1
+J'ai mis en place un premier set up de détéction d'objet en utilisant tensor flow et [ce tutoriel](https://codelabs.developers.google.com/codelabs/tensorflowjs-object-detection#4). Il marche bien mais le dessin est fait en html et non dans le canvas. 
+Dessiner les boudings box des téléphones dans un canvas va être ma prochaine étape. 
+
+<video src="./assets/video/20261126/01.mp4"  height="500" controls></video>
+
+Dans les tests on remarque aussi que le test jump, il faudra encore laisser un délai pour qu eça ne jump pas
