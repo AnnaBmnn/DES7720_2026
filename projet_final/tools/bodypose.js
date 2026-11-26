@@ -43,7 +43,7 @@ async function startCamera() {
   await new Promise(r => (video.onloadedmetadata = r));
   video.width = video.videoWidth;   // needed by pose-detection
   video.height = video.videoHeight;
-  video.style.display = 'none';
+//   video.style.display = 'none';
   await video.play();
 }
 
@@ -58,6 +58,9 @@ export function stopBody() {
 async function detectPose() {
   if (!isRunning) return;
   if (video.readyState === 4) {
+    // On ne dessine plus la vidéo mais un fond sur le canavs
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     // ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     try {
       const poses = await detector.estimatePoses(video);
@@ -97,7 +100,6 @@ function drawPoses(poses) {
 
 // Draw the skeleton connecting keypoints
 function drawSkeleton(pose) {
-    console.log(pose)
     // Define connections for a human skeleton
     const connections = [
         ['nose', 'left_eye'], ['nose', 'right_eye'],

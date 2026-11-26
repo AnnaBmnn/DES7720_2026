@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { createBody } from "../tools/bodypose.js";
+import { createObjectDetection } from "../tools/objectDetection.js";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 // scène de dé template : - )
 
@@ -9,6 +10,7 @@ let map;
 export function createScene(scene) {
 
   const bodyCanvas = createBody(); 
+  createObjectDetection(); 
 
   // let bodyCanvas;   
   const map = new THREE.CanvasTexture(bodyCanvas);
@@ -128,10 +130,10 @@ export function createScene(scene) {
             vUv.x,
             vUv.y  + sin(vUv.x * 101.0 ) * 0.5 * cos(vUv.y * 5.0  + vTime * 2.1) + cnoise(vUv * 10.0) 
         );
-        float color = wavedUv.y ;
         vec4 bodyTexture = texture2D(uTexture, vUv);
-
-        gl_FragColor = bodyTexture;
+        float color = wavedUv.y ;
+        color = 1.0 * bodyTexture.y;
+        gl_FragColor = vec4(vec3(color), 1.0);
 
       }
 
